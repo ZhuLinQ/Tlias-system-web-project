@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlq.mapper.ClazzMapper">
+    <insert id="insert">
+        insert into clazz(name, room, begin_date, end_date, master_id, create_time, update_time,subject)
+        values(#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{createTime}, #{updateTime},#{subject})
+    </insert>
+    <update id="update">
+        update clazz set name = #{name}, room = #{room}, begin_date = #{beginDate}, end_date = #{endDate},
+        master_id = #{masterId}, update_time = #{updateTime},subject = #{subject}
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete from clazz where id = #{id}
+    </delete>
+
+    <select id="list" resultType="com.zlq.pojo.Clazz">
+        select c.id, c.name, c.room, c.begin_date, c.end_date, c.master_id, c.create_time, c.update_time,
+        e.name as master_name,
+        CASE
+        WHEN CURDATE()  &gt;= c.end_date THEN '未开班'
+        WHEN curdate() &lt; c.end_date THEN '已开班'
+        ELSE '在读中'
+        END status
+        from clazz c left join emp e on c.master_id = e.id
+        <where>
+            <if test="name != null and name != ''">
+                and c.name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getById" resultType="com.zlq.pojo.Clazz">
+        select * from clazz where id = #{id}
+    </select>
+    <select id="listAll" resultType="com.zlq.pojo.Clazz">
+        select clazz.* from clazz
+    </select>
+    <select id="countClazzData" resultType="java.util.Map">
+        SELECT
+            c.name AS clazz,
+            COUNT(s.id) AS data
+        FROM clazz c
+                 LEFT JOIN student s ON c.id = s.clazz_id
+        GROUP BY c.id, c.name
+    </select>
+</mapper>
