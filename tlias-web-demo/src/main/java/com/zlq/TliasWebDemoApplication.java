@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 
-@ServletComponentScan //开启对Servlet组件的支持
+//开启对Servlet组件的支持
+@ServletComponentScan
 @SpringBootApplication
 public class TliasWebDemoApplication {
 
