@@ -33,7 +33,8 @@ public class OperationLogAspect {
 
         // 构建日志对象
         OperateLog operateLog = new OperateLog();
-        operateLog.setOperateEmpId(getCurrentUserId()); // 需要实现 getCurrentUserId 方法
+        // 需要实现 getCurrentUserId 方法
+        operateLog.setOperateEmpId(getCurrentUserId());
         operateLog.setOperateTime(LocalDateTime.now());
         operateLog.setClassName(joinPoint.getTarget().getClass().getName());
         operateLog.setMethodName(joinPoint.getSignature().getName());

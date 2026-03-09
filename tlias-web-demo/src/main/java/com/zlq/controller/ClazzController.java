@@ -1,11 +1,12 @@
 package com.zlq.controller;
 
-
 import com.zlq.pojo.Clazz;
+
 import com.zlq.pojo.ClazzQueryParam;
 import com.zlq.pojo.PageResult;
 import com.zlq.pojo.Result;
 import com.zlq.service.ClazzService;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,6 @@ public class ClazzController {
 
     @Autowired
     private ClazzService clazzService;
-
 
     /**
      * 分页查询
@@ -42,6 +42,7 @@ public class ClazzController {
         this.clazzService.deleteById(id);
         return Result.success();
     }
+
 
     @PostMapping
     public Result add(@RequestBody Clazz clazz){
@@ -69,3 +70,5 @@ public class ClazzController {
         return Result.success(list);
     }
 }
+
+
